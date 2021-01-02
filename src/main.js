@@ -15,6 +15,11 @@ var m_color = new L.tileLayer('https://tile.mierune.co.jp/mierune/{z}/{x}/{y}.pn
 //MIERUNE MONO読み込み
 var arcgis_satellite = new L.tileLayer('https://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}');
 
+// Google earth
+let google_satellite = new L.tileLayer('http://localhost/WeServer/wmts/1.0.0/acimage/default/mercator/{z}/{y}/{x}.jpg',{
+	  maxZoom: 9
+});
+
 //経緯度設定
 var lat = 36.0737;
 var lng = 120.4250;
@@ -32,6 +37,7 @@ var map = L.map('map', {
 //背景レイヤ
 var Map_BaseLayer = {
     "MIERUNE Color": m_color,
+    "Google satellite": google_satellite,
     "ArcGIS satellite": arcgis_satellite
 };
 
