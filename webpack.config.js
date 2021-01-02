@@ -29,9 +29,6 @@ module.exports = {
         ]
     },
     plugins: [
-        new webpack.ProvidePlugin({
-            L: 'leaflet'
-        })
     ],
     devServer: {
         contentBase: path.join(__dirname, "dist"),

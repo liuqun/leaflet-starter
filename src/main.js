@@ -1,3 +1,5 @@
+import L from 'leaflet';
+
 // CSS一式を読み込んでパッケージ
 import "leaflet/dist/leaflet.css";
 import "./css/style.css";
