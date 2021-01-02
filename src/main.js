@@ -1,5 +1,7 @@
 import L from 'leaflet';
 import 'leaflet-draw';
+import 'proj4leaflet'
+import 'leaflet.chinatmsproviders';
 
 // CSS一式を読み込んでパッケージ
 import "leaflet/dist/leaflet.css";
@@ -14,13 +16,31 @@ var m_color = new L.tileLayer('https://tile.mierune.co.jp/mierune/{z}/{x}/{y}.pn
     attribution: "Maptiles by <a href='http://mierune.co.jp/' target='_blank'>MIERUNE</a>, under CC BY. Data by <a href='http://osm.org/copyright' target='_blank'>OpenStreetMap</a> contributors, under ODbL."
 });
 
-//MIERUNE MONO読み込み
-var arcgis_satellite = new L.tileLayer('https://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}');
+// ArcGIS 卫星地图
+let arcgis_satellite = new L.tileLayer('https://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}');
 
 // Google earth
 let google_satellite = new L.tileLayer('http://localhost/WeServer/wmts/1.0.0/acimage/default/mercator/{z}/{y}/{x}.jpg',{
 	  maxZoom: 9
 });
+
+// 高德地图
+let autonavi_satellite = L.tileLayer.chinaProvider(
+    'GaoDe.Satellite.Map',
+    {
+        maxZoom:18,
+        minZoom:5,
+    }
+);
+
+// OpenStreetMap
+let osm_normal = L.tileLayer.chinaProvider(
+    'OSM.Normal.Map',
+    {
+        maxZoom:18,
+        minZoom:5,
+    }
+);
 
 //経緯度設定
 var lat = 36.0737;
@@ -40,6 +60,8 @@ var map = L.map('map', {
 var Map_BaseLayer = {
     "MIERUNE Color": m_color,
     "Google satellite": google_satellite,
+    "Autonavi normal": autonavi_satellite,
+    "OpenStreatMap normal": osm_normal,
     "ArcGIS satellite": arcgis_satellite
 };
 
