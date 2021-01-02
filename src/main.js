@@ -1,7 +1,9 @@
 import L from 'leaflet';
+import 'leaflet-draw';
 
 // CSS一式を読み込んでパッケージ
 import "leaflet/dist/leaflet.css";
+import "leaflet-draw/dist/leaflet.draw.css";
 import "./css/style.css";
 
 //デフォルトアイコンパス
@@ -59,3 +61,61 @@ marker.bindPopup("<b>中国电波传播研究所</b><br/>青大一路19号").ope
 marker.addTo(map);
 
 map.setView(defaultCenter, defaultZoom);
+
+
+// Initialise the FeatureGroup to store editable layers
+var editableLayers = new L.FeatureGroup();
+map.addLayer(editableLayers);
+
+var MyCustomMarker = L.Icon.extend({
+    options: {
+        shadowUrl: 'img/icon/marker-shadow.png',
+        iconUrl: 'img/icon/marker-icon.png'
+    }
+});
+var options = {
+    position: 'topleft',
+    draw: {
+        polyline: {
+            shapeOptions: {
+                color: '#f357a1',
+                weight: 10
+            }
+        },
+        polygon: {
+            allowIntersection: false, // Restricts shapes to simple polygons
+            drawError: {
+                color: '#e1e100', // Color the shape will turn when intersects
+                message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
+            },
+            shapeOptions: {
+                color: '#bada55'
+            }
+        },
+        circle: false, // Turns off this drawing tool
+        rectangle: {
+            shapeOptions: {
+                clickable: false
+            }
+        },
+        marker: {
+            icon: new MyCustomMarker()
+        }
+    },
+    edit: {
+        featureGroup: editableLayers, //REQUIRED!!
+        remove: false
+    }
+};
+// Initialise the draw control and pass it the FeatureGroup of editable layers
+var drawControl = new L.Control.Draw(options);
+map.addControl(drawControl);
+
+map.on('draw:created', function (e) {
+    const type = e.layerType;
+    const layer = e.layer;
+    if (type === 'marker') {
+        layer.bindPopup('临时标记点');
+    }
+    editableLayers.addLayer(layer);
+});

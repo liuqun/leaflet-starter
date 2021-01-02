@@ -20,6 +20,7 @@
     "webpack-dev-server": "^3.10.1"
   },
   "dependencies": {
-    "leaflet": "^1.6.0"
+    "leaflet": "^1.6.0",
+    "leaflet-draw": "^1.0.4"
   }
 }
