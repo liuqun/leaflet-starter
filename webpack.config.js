@@ -1,17 +1,21 @@
+const path = require('path');
 const webpack = require("webpack");
 
 module.exports = {
     mode: 'production',
-    entry: './_resouce/main.js',
+    entry: {
+        bundle: './src/main.js'
+    },
+
     output: {
-        path: __dirname + '/dist',
-        filename: 'app.js'
+        path: path.resolve(__dirname, 'dist'),
+        filename: '[name].js'
     },
     module: {
         rules: [
             {
                 test: /\.css$/,
-                loaders: ['style-loader', 'css-loader']
+                use: ['style-loader', 'css-loader']
             },
             {
                 test: /\.(png|svg|jpg|gif)$/,
@@ -30,7 +34,7 @@ module.exports = {
         })
     ],
     devServer: {
-        contentBase: __dirname + '/dist',
+        contentBase: path.join(__dirname, "dist"),
         publicPath: '/',
         watchContentBase: true,
         open: true
